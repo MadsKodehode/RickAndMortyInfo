@@ -1,12 +1,11 @@
 import { useState } from "react";
 
 function Card({ data }) {
-  //Mapping the data and creating card element for each one\\
-  const [currentChar, setCurrentChar] = useState(null);
-
   //onClick the currentchar state is set to the id of the clicked character card and then compares it
   //and returns additional info for that specific character with same id as the state
+  const [currentChar, setCurrentChar] = useState(null);
 
+  //Mapping the data and creating card element for each one\\
   return data.map((character) =>
     currentChar === character.id ? (
       <div
