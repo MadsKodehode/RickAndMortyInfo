@@ -1,50 +1,54 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import Portal from "./imgs/portal.svg";
-import Logo from "./imgs/rickmorty-logo 1.svg";
 import Card from "./components/Card";
 import Header from "./components/Header";
+
 function App() {
+  //Data state
   const [data, setData] = useState([]);
+
+  //Info state
   const [info, setInfo] = useState([]);
-  const [count, setCount] = useState(1);
+
+  //Current page state
+  const [currentPage, setCurrentPage] = useState(1);
 
   //Next page function
   function nextPage() {
     //Takes the amount of pages from the api and stops running if we try to click next
-    if (count === apiUrls.pages) return;
-    setCount((current) => current + 1);
+    if (currentPage === apiUrls.pages) return;
+    setCurrentPage((current) => current + 1);
   }
 
   //Previous page function
   function prevPage() {
-    if (count === 1) return;
-    setCount((current) => current - 1);
+    if (currentPage === 1) return;
+    setCurrentPage((current) => current - 1);
   }
 
-  //Api urls
+  //Api urls and info
   const apiUrls = {
     main: "https://rickandmortyapi.com/api",
     info: "https://rickandmortyapi.com/api/character",
-    chararcter: `https://rickandmortyapi.com/api/character/?page=${count}`,
+    current: `https://rickandmortyapi.com/api/character/?page=${currentPage}`,
     pages: info.pages,
     count: info.count,
   };
 
   //Fetching the data and storing it in the data state
   useEffect(() => {
-    fetch(apiUrls.chararcter)
+    fetch(apiUrls.current)
       .then((response) => response.json())
       .then((data) => {
-        //Storing data info so that we get an updated amount of pages\\
+        //Storing data info so that we get an updated amount of pages and number of characters\\
         setInfo(data.info);
 
         //Storing the results
         setData(data.results);
       });
 
-    //Dependencies set to count so that whenever the count state changes it will update the data based on count
-  }, [count]);
+    //Dependencies set to currentPage so that whenever the currentPage state changes it will update the data to the data we want
+  }, [currentPage]);
 
   //Passing what we need to props
   return (

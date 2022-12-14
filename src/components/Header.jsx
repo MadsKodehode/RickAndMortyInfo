@@ -1,5 +1,6 @@
 function Header({ onClick }) {
   //Destructuring the onClick prop so we can use the functions\\
+
   const [nextPage, prevPage] = onClick;
 
   return (
