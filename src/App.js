@@ -13,6 +13,20 @@ function App() {
   //Current page state
   const [currentPage, setCurrentPage] = useState(1);
 
+  //State for storing the input value
+  const [input, setInput] = useState("");
+
+  //State for storing the searched characters
+  const [searched, setSearched] = useState(null);
+
+  function searchChars(value) {
+    setInput(value);
+    const filtered = data.filter((char) => {
+      return char.name.toLowerCase().includes(value);
+    });
+    setSearched(filtered);
+  }
+
   //Next page function
   function nextPage() {
     //Takes the amount of pages from the api and stops running if we try to click next
@@ -53,9 +67,13 @@ function App() {
   //Passing what we need to props
   return (
     <div className="App">
-      <Header onClick={[nextPage, prevPage]}></Header>
+      <Header
+        onClick={[nextPage, prevPage]}
+        inputState={[input, setInput]}
+        searchChars={searchChars}
+      ></Header>
       <div className="wrapper">
-        <Card data={data}></Card>
+        <Card data={data} searched={searched}></Card>
       </div>
     </div>
   );

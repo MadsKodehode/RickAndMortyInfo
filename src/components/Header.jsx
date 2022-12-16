@@ -1,6 +1,9 @@
-function Header({ onClick }) {
+import { useState } from "react";
+
+function Header({ onClick, inputState, searchChars }) {
   //Destructuring the onClick prop so we can use the functions\\
   const [nextPage, prevPage] = onClick;
+  const [input, setInput] = inputState;
 
   return (
     <header>
@@ -11,6 +14,13 @@ function Header({ onClick }) {
       <button className="next" onClick={nextPage}>
         Next
       </button>
+      <input
+        className="srch"
+        type="text"
+        placeholder="search for characters"
+        value={input}
+        onChange={(e) => searchChars(e.target.value)}
+      ></input>
     </header>
   );
 }
